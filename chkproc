@@ -1,7 +1,7 @@
 #!/bin/bash
-# $Id: chkproc,v 1.5 2017/05/02 10:03:46 fulford Exp fulford $
+# $Id: chkproc,v 1.6 2017/05/02 10:04:57 fulford Exp fulford $
 # $Source: /src/admin/usr/local/etc/RCS/chkproc,v $
-# $Revision: 1.5 $
+# $Revision: 1.6 $
 # Author C W Fulford.
 # Copyright 2014 (c) C W Fulford.
 # Licensed for public use under the LGPL, .
@@ -70,7 +70,7 @@ _alert () { case $1 in
 
 
 
-_up () { nmap -p $port $host >$tmp 
+_up () { nmap -Pn -p $port $host >$tmp 
 		state=`awk -v port=$port <$tmp '{
 			split($1,a,"/")	
 			if(a[1] == port) print $2
