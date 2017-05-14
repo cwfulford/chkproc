@@ -1,7 +1,7 @@
 #!/bin/bash
-# $Id: chkproc,v 1.10 2017/05/14 10:17:51 fulford Exp fulford $
+# $Id: chkproc,v 1.11 2017/05/14 10:21:35 fulford Exp fulford $
 # $Source: /src/admin/usr/local/etc/RCS/chkproc,v $
-# $Revision: 1.10 $
+# $Revision: 1.11 $
 # Author C W Fulford.
 # Copyright 2014 (c) C W Fulford.
 # Licensed for public use under the LGPL, .
@@ -87,10 +87,13 @@ _up () { nmap -Pn -p $port $host >$tmp
 }
 if _up ;then
 	ssh -qp $port $host "ps -ef|grep $proc" |
-	awk '$1 ~ /root/'| grep -q $proc || { 
+	awk '$1 ~ /root/'|
+	if  grep -q $proc ;then 
+		[ $verbose ] && echo "$cmd: $proc running on $host">&2
+	else
 		[ $verbose ] && echo "$cmd: $proc stopped on $host">&2
 		_alert stopped
-	}
+	fi
 else
 	_alert down 
 fi
