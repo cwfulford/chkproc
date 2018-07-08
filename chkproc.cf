@@ -9,7 +9,7 @@ bfl-uw:
 slackweb:
 	proc="VBoxHeadless -s slackweb"
 	port=22
-	host=tx-1330
+	host=tx1330
 	rcpt=fulford@fulford.net
 ######################################################################
 # This program is free software: you can redistribute it and or      #
