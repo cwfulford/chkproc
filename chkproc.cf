@@ -5,13 +5,23 @@ bfl-uw:
 	port=227
 	host=bfl-uw
 	rcpt=00022220009@txtservice.co.uk,fulford@fulford.net
+	procuser=root
 
 slackweb:
 	proc="VBoxHeadless -s slackweb"
 	port=22
 	host=tx1330
 	rcpt=fulford@fulford.net
-	restart="vboxheadles -slackweb --vrde on"
+	restart="/usr/bin/vboxheadless -s slackweb --vrde on"
+	procuser=fulford
+
+caswallon:
+	proc="VBoxHeadless -s caswallon"
+	port=22
+	host=tx1330
+	rcpt=fulford@fulford.net
+	restart="/usr/bin/vboxheadless -s caswallon --vrde on"
+	procuser=fulford
 ######################################################################
 # This program is free software: you can redistribute it and or      #
 # modify it under the terms of the Lesser GNU General Public License #
