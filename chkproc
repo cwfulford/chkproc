@@ -1,14 +1,14 @@
 #!/bin/bash
-# $Id: chkproc,v 1.11 2017/05/14 10:21:35 fulford Exp fulford $
+# $Id: chkproc,v 1.12 2018/07/08 20:42:37 fulford Exp fulford $
 # $Source: /src/admin/usr/local/etc/RCS/chkproc,v $
-# $Revision: 1.11 $
+# $Revision: 1.12 $
 # Author C W Fulford.
 # Copyright 2014 (c) C W Fulford.
 # Licensed for public use under the LGPL, .
 # For assistance contact fulford@fulford.net 0709 229 5385
 ########################################################################
 cmd=`basename $0`
-syntax="$cmd [-c config] [-d(ebug)] [-l] [-r <email_rcpts>] [-v(erbose)] clientid"
+syntax="$cmd [-c config] [-d(ebug)] [-l] [-r <email_rcpts>] [-v(erbose)] procid"
 while [ $# -gt 0 ] ;do
 	case $1 in 
 		-c) config=$2;shift 2;;	
@@ -22,7 +22,7 @@ while [ $# -gt 0 ] ;do
 done
 
 
-if [ -z "$clientid" ];then
+if [ -z "$procid" ];then
 	echo $syntax >&2;
 	exit 1
 fi
@@ -35,20 +35,20 @@ fi
 tmp=/var/tmp/$cmd$$
 
 if [ -f $config ];then
-       if grep -e "^${clientid}:" $config >/dev/null ;then
+       if grep -e "^${procid}:" $config >/dev/null ;then
 	   eval `sed -ne  '/^'$clientid':/,/^$/{
 		/^[ \t]*[^=]*=.*$/p
 	   }' $config`
 	else
 		[ "$verbose" ] &&{
-	      	 	echo "$cmd: can't find client id \"$clientid\" in $config" >&2
-			echo "$cmd: using $host as host name.">&2
+	      	 	echo "$cmd: can't find process id \"$procid\" in $config" >&2
+			_end 1
 		}
-		host=$clientid
 	fi
 fi
 
 _end () {
+	rval=$1
 	[ -f $tmp ] && rm  $tmp 
 	exit $rval
 }
@@ -56,8 +56,7 @@ trap  "_end" 15
 
 if ! getent hosts $host>/dev/null;then 
 	echo "$cmd: can't resolve $host" >&2
-	rval=1
-	_end 
+	_end 1
 fi
 
 [ -n "$_rcpts" -a -n "$rcpts" ] && $rcpts="$rcpts,$_rcpts"
@@ -91,6 +90,9 @@ if _up ;then
 	if  grep -q $proc ;then 
 		[ $verbose ] && echo "$cmd: $proc running on $host">&2
 	else
+		[ $restart ] &&{
+			$restart
+			logger "restarting $
 		[ $verbose ] && echo "$cmd: $proc stopped on $host">&2
 		_alert stopped
 	fi

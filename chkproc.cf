@@ -4,6 +4,13 @@ bfl-uw:
 	proc="bflsync"
 	port=227
 	host=bfl-uw
+	rcpt=00022220009@txtservice.co.uk,fulford@fulford.net
+
+slackweb:
+	proc="VBoxHeadless -s slackweb"
+	port=22
+	host=tx-1330
+	rcpt=fulford@fulford.net
 ######################################################################
 # This program is free software: you can redistribute it and or      #
 # modify it under the terms of the Lesser GNU General Public License #
