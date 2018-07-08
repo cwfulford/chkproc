@@ -1,7 +1,7 @@
 #!/bin/bash
-# $Id: chkproc,v 1.14 2018/07/08 20:50:02 fulford Exp fulford $
+# $Id: chkproc,v 1.15 2018/07/08 20:53:09 fulford Exp fulford $
 # $Source: /src/admin/usr/local/etc/RCS/chkproc,v $
-# $Revision: 1.14 $
+# $Revision: 1.15 $
 # Author C W Fulford.
 # Copyright 2014 (c) C W Fulford.
 # Licensed for public use under the LGPL, .
@@ -93,7 +93,10 @@ if _up ;then
 		[ $restart ] &&{
 			$restart
 			logger "restarting $procid"
-		[ $verbose ] && echo "$cmd: $proc stopped on $host">&2
+		}
+		[ $verbose ] &&{
+			 echo "$cmd: $proc stopped on $host">&2
+		}
 		_alert stopped
 	fi
 else
