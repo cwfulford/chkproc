@@ -1,7 +1,7 @@
 #!/bin/bash
-# $Id: chkproc,v 1.17 2018/07/08 22:24:09 fulford Exp fulford $
+# $Id: chkproc,v 1.18 2019/03/28 12:06:52 fulford Exp fulford $
 # $Source: /src/admin/usr/local/etc/RCS/chkproc,v $
-# $Revision: 1.17 $
+# $Revision: 1.18 $
 # Author C W Fulford.
 # Copyright 2014 (c) C W Fulford.
 # Licensed for public use under the LGPL, .
@@ -67,7 +67,6 @@ _alert () { case $1 in
 		stopped) mailx -s "ALERT - $proc stopped on $host" $rcpts<$tmp;;
 	     esac
 	}
-
 
 
 _up () { nmap -Pn -p $port $host >$tmp 

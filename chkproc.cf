@@ -6,6 +6,8 @@ bfl-uw:
 	host=bfl-uw
 	rcpt=00022220009@txtservice.co.uk,fulford@fulford.net
 	procuser=root
+	rcpts=belpark@citylinux.com
+	restart="/etc/init.d/bflsync restart"
 
 slackweb:
 	proc="VBoxHeadless -s slackweb"
